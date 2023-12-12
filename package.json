@@ -1,0 +1,39 @@
+{
+  "name": "spotifi-back-end",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.20",
+    "@types/jest": "^29.5.8",
+    "@types/sanitize-html": "^2.9.4",
+    "@types/supertest": "^2.0.16",
+    "bun-types": "latest",
+    "jest": "^29.7.0",
+    "jest-mock-extended": "^3.0.5",
+    "jest-mock-req-res": "^1.0.2",
+    "prisma": "^5.5.2",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
+    "@prisma/client": "^5.5.2",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "sanitize-html": "^2.11.0"
+  },
+  "scripts": {
+    "dev": "dotenv -e .env.development -- bun --hot run ./src/index.ts",
+    "dev-test": "dotenv -e .env.development -- jest --watchAll --verbose --coverage",
+    "dev-build": "dotenv -e .env.development -- bunx prisma generate && dotenv -e .env.development -- bunx prisma migrate dev && dotenv -e .env.development -- bunx prisma migrate deploy",
+    "build": "bunx prisma generate && bunx prisma migrate deploy",
+    "test": "jest --watchAll --verbose --coverage"
+  }
+}
