@@ -5,7 +5,7 @@ export interface AddSongToPlaylistResult {
 }
 
 export default function makeAddSongToPlaylist({ playlistsDb }: { playlistsDb: PlaylistsDb }) {
-    return async function addSongToPlaylist(songId: string, playlistId: string): Promise<{ songId: string; playlistId: string; assignedAt: Date; } | undefined> {
+    return async function addSongToPlaylist(songId: string, playlistId: string): Promise<Playlist | null | undefined> {
         if (!songId) {
             throw new Error('You must supply a song id.');
         }

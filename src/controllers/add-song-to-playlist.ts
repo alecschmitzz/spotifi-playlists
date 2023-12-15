@@ -1,7 +1,7 @@
-import { HttpRequest } from "../use-cases/types";
+import { HttpRequest, Playlist } from "../use-cases/types";
 
 interface AddSongToPlaylistDependencies {
-    addSongToPlaylist: (songId: string, playlistId: string) => Promise<{ songId: string; playlistId: string; assignedAt: Date; } | undefined>;
+    addSongToPlaylist: (songId: string, playlistId: string) => Promise<Playlist | null | undefined>;
 }
 
 export default function makeDeletePlaylist({ addSongToPlaylist }: AddSongToPlaylistDependencies) {
@@ -13,7 +13,7 @@ export default function makeDeletePlaylist({ addSongToPlaylist }: AddSongToPlayl
             const added = await addSongToPlaylist(httpRequest.params.songId, httpRequest.params.playlistId);
             return {
                 headers,
-                statusCode: added?.songId === httpRequest.params.songId ? 201 : 400,
+                statusCode: added?.id === httpRequest.params.playlistId ? 201 : 400,
                 body: { added },
             };
         } catch (e: unknown) {

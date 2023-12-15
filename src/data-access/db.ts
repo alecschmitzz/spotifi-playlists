@@ -50,7 +50,7 @@ export default function makePlaylistsDb({ prisma }: { prisma: PrismaClient }): P
     });
   }
 
-  async function addSongToPlaylist({ songId, playlistId }: { songId: string, playlistId: string }) {
+  async function addSongToPlaylist({ songId, playlistId }: { songId: string, playlistId: string }): Promise<Playlist | null | undefined> {
     try {
       // Retrieve the song from the database
       const song = await prisma.song.findUnique({
@@ -76,14 +76,16 @@ export default function makePlaylistsDb({ prisma }: { prisma: PrismaClient }): P
       // If the entry already exists, you can handle it accordingly (update or log)
       if (existingSongPlaylist) {
         console.log('Song already exists in the playlist.');
-        return existingSongPlaylist;
+        return playlist;
       }
 
       // Create a new SongPlaylist entry to associate the song with the playlist
-      return await prisma.songPlaylist.create({
+      return await prisma.playlist.update({
+        where: { id: playlistId },
         data: {
-          song: { connect: { id: songId } },
-          playlist: { connect: { id: playlistId } },
+          songs: {
+            connect: { id: songId },
+          },
         },
       });
 

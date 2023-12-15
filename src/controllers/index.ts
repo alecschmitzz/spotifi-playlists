@@ -22,7 +22,7 @@ interface ControllerDependencies {
     listPlaylists: () => Promise<Playlist[]>;
     editPlaylist: (playlistInfo: Playlist) => Promise<Playlist>;
     removePlaylist: (playlistInfo: { id: string }) => Promise<{ deletedCount: number }>;
-    addSongToPlaylist: (params: { id: string, songId: string }) => Promise<{ songId: string; playlistId: string; assignedAt: Date; } | undefined>;
+    addSongToPlaylist: (params: { id: string, songId: string }) => Promise<Playlist | null | undefined>;
 }
 
 const postPlaylist = makePostPlaylist({ addPlaylist });
