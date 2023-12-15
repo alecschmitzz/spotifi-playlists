@@ -28,6 +28,7 @@ export interface PlaylistsDb {
     insert: (playlist: any) => Promise<Playlist>;
     update: (params: { id: string } & Partial<Playlist>) => Promise<Playlist>;
     remove: (params: { id: string }) => Promise<Playlist>;
+    addSongToPlaylist: (params: { songId: string, playlistId: string }) => Promise<{ songId: string; playlistId: string; assignedAt: Date; } | undefined>;
 }
 
 export interface HttpRequest {

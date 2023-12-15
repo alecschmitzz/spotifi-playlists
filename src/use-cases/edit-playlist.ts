@@ -14,7 +14,7 @@ export default function makeEditPlaylist({ playlistsDb }: { playlistsDb: Playlis
             throw new Error('You must supply at least one change to edit.');
         }
 
-        const existing = await playlistsDb.findById({ id });
+        const existing = await playlistsDb.findById({ id: id, includeSongs: false });
 
         if (!existing) {
             throw new RangeError('Playlist not found.');

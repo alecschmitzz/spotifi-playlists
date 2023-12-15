@@ -9,6 +9,7 @@ import {
   getPlaylists,
   patchPlaylist,
   deletePlaylist,
+  postSongToPlaylist,
   notFound,
 } from './controllers'; // Adjust the import paths according to your project structure
 import makeCallback from './express-callback';
@@ -35,6 +36,7 @@ app.patch(`${apiRoot}/playlists/:id`, makeCallback(patchPlaylist));
 app.patch(`${apiRoot}/playlists`, makeCallback(patchPlaylist));
 app.get(`${apiRoot}/playlists`, makeCallback(getPlaylists));
 app.get(`${apiRoot}/playlists/:id`, makeCallback(getPlaylist));
+app.post(`${apiRoot}/playlists/:playlistId/addsong/:songId`, makeCallback(postSongToPlaylist));
 app.get(`${apiRoot}`, (req, res) => {
   res.json({ message: "Ok it works...", hostname: os.hostname(), version: "0.0.1-beta2" })
 })

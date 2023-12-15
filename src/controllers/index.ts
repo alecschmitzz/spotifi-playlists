@@ -3,13 +3,15 @@ import {
     getSinglePlaylist,
     listPlaylists,
     editPlaylist,
-    removePlaylist
+    removePlaylist,
+    addSongToPlaylist
 } from '../use-cases';
 import makePostPlaylist from './post-playlist';
 import makeGetPlaylists from './get-playlists';
 import makeGetPlaylist from './get-playlist';
 import makePatchPlaylist from './patch-playlist';
 import makeDeletePlaylist from './delete-playlist';
+import makeAddSongToPlaylist from './add-song-to-playlist';
 import notFound from './not-found';
 
 import { HttpRequest, Playlist } from '../use-cases/types';
@@ -20,6 +22,7 @@ interface ControllerDependencies {
     listPlaylists: () => Promise<Playlist[]>;
     editPlaylist: (playlistInfo: Playlist) => Promise<Playlist>;
     removePlaylist: (playlistInfo: { id: string }) => Promise<{ deletedCount: number }>;
+    addSongToPlaylist: (params: { id: string, songId: string }) => Promise<{ songId: string; playlistId: string; assignedAt: Date; } | undefined>;
 }
 
 const postPlaylist = makePostPlaylist({ addPlaylist });
@@ -27,6 +30,7 @@ const getPlaylist = makeGetPlaylist({ getSinglePlaylist });
 const getPlaylists = makeGetPlaylists({ listPlaylists });
 const patchPlaylist = makePatchPlaylist({ editPlaylist });
 const deletePlaylist = makeDeletePlaylist({ removePlaylist });
+const postSongToPlaylist = makeAddSongToPlaylist({ addSongToPlaylist });
 
 const playlistController = Object.freeze({
     postPlaylist,
@@ -34,8 +38,9 @@ const playlistController = Object.freeze({
     getPlaylists,
     patchPlaylist,
     deletePlaylist,
+    postSongToPlaylist,
     notFound,
 });
 
 export default playlistController;
-export { postPlaylist, getPlaylist, getPlaylists, patchPlaylist, deletePlaylist, notFound };
+export { postPlaylist, getPlaylist, getPlaylists, patchPlaylist, deletePlaylist, postSongToPlaylist, notFound };
